@@ -63,7 +63,7 @@ func (uc *UserController) GetUser(ctx *gin.Context) {
 		id = user_id
 	}
 
-	u, err := uc.UserService.GetUserByID(&user_id)
+	u, err := uc.UserService.GetUserByID(id)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

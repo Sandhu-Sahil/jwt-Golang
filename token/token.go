@@ -2,7 +2,6 @@ package token
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"time"
 
@@ -50,7 +49,7 @@ func TokenValid(c *gin.Context) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(os.Getenv("API_SECRET")), nil
+		return []byte("Sandhu-Sahil"), nil
 	})
 	if err != nil {
 		return err
@@ -71,7 +70,6 @@ func ExtractToken(c *gin.Context) string {
 }
 
 func ExtractTokenID(c *gin.Context) (string, error) {
-
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -83,8 +81,9 @@ func ExtractTokenID(c *gin.Context) (string, error) {
 		return "", err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
+
 	if ok && token.Valid {
-		uid := fmt.Sprintf("%.0f", claims["user_id"])
+		uid := fmt.Sprintf("%s", claims["id"])
 		return uid, nil
 	}
 	return "", nil

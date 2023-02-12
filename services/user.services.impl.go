@@ -25,8 +25,8 @@ func NewUserService(usercollection *mongo.Collection, ctx context.Context) UserS
 	}
 }
 
-func (u *UserServiceImpl) GetUserByID(id *string) (*models.User, error) {
-	objectid, _ := primitive.ObjectIDFromHex(*id)
+func (u *UserServiceImpl) GetUserByID(id string) (*models.User, error) {
+	objectid, _ := primitive.ObjectIDFromHex(id)
 
 	query := bson.D{bson.E{Key: "_id", Value: objectid}}
 	var userFound *models.User
@@ -35,6 +35,7 @@ func (u *UserServiceImpl) GetUserByID(id *string) (*models.User, error) {
 		return &models.User{}, err
 	}
 
+	userFound.Password = "**PROTECTED**"
 	return userFound, nil
 }
 
