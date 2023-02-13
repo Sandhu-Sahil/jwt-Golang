@@ -74,7 +74,7 @@ func (uc *UserController) GetUser(ctx *gin.Context) {
 
 func (uc *UserController) RegisterLoginRoutes(rg *gin.RouterGroup) {
 	userroute := rg.Group("/user")
-	userroute.POST("/login", uc.Login)
+	userroute.Use(middlewares.ValidationUserLogin()).POST("/login", uc.Login)
 	userroute.POST("/register", uc.Register)
 }
 
