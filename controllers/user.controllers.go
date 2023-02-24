@@ -58,7 +58,7 @@ func (uc *UserController) GetUser(ctx *gin.Context) {
 		return
 	}
 
-	if id == "" {
+	if id == "0" {
 		id = user_id
 	}
 
