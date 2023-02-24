@@ -19,6 +19,9 @@ func NewRouterService(usercontroller controllers.UserController) RouterService {
 
 func (rs *RouterService) RegisterLoginRoutes(rg *gin.RouterGroup) {
 	userroute := rg.Group("/user")
+
+	// userroute.Use(middlewares.ValidationUserLogin()).POST("/login", rs.Usercontroller.Login)
+
 	userroute.POST("/login", rs.Usercontroller.Login)
 	userroute.POST("/register", rs.Usercontroller.Register)
 }
