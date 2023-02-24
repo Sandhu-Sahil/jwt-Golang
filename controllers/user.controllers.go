@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"jwt-golang/middlewares"
 	"jwt-golang/models"
 	"jwt-golang/services"
 	"jwt-golang/token"
@@ -72,14 +71,14 @@ func (uc *UserController) GetUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "success", "data": u})
 }
 
-func (uc *UserController) RegisterLoginRoutes(rg *gin.RouterGroup) {
-	userroute := rg.Group("/user")
-	userroute.Use(middlewares.ValidationUserLogin()).POST("/login", uc.Login)
-	userroute.POST("/register", uc.Register)
-}
+// func (uc *UserController) RegisterLoginRoutes(rg *gin.RouterGroup) {
+// 	userroute := rg.Group("/user")
+// 	userroute.Use(middlewares.ValidationUserLogin()).POST("/login", uc.Login)
+// 	userroute.POST("/register", uc.Register)
+// }
 
-func (uc *UserController) RegisterJwtCheckRoutes(rg *gin.RouterGroup) {
-	userroute := rg.Group("/check")
-	userroute.Use(middlewares.JwtAuthMiddleware())
-	userroute.GET("/get/:id", uc.GetUser)
-}
+// func (uc *UserController) RegisterJwtCheckRoutes(rg *gin.RouterGroup) {
+// 	userroute := rg.Group("/check")
+// 	userroute.Use(middlewares.JwtAuthMiddleware())
+// 	userroute.GET("/get/:id", uc.GetUser)
+// }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"jwt-golang/controllers"
+	"jwt-golang/routes"
 	"jwt-golang/services"
 	"log"
 
@@ -17,6 +18,7 @@ var (
 	server      *gin.Engine
 	us          services.UserService
 	uc          controllers.UserController
+	rs          routes.RouterService
 	ctx         context.Context
 	userc       *mongo.Collection
 	mongoclient *mongo.Client
@@ -41,6 +43,7 @@ func init() {
 	userc = mongoclient.Database("jwt-golang").Collection("users")
 	us = services.NewUserService(userc, ctx)
 	uc = controllers.New(us)
+	rs = routes.NewRouterService(uc)
 	server = gin.Default()
 }
 
@@ -48,10 +51,10 @@ func main() {
 	defer mongoclient.Disconnect(ctx)
 
 	basepath := server.Group("/api-v1")
-	uc.RegisterLoginRoutes(basepath)
+	rs.RegisterLoginRoutes(basepath)
 
 	jwtpath := server.Group("/jwt")
-	uc.RegisterJwtCheckRoutes(jwtpath)
+	rs.RegisterJwtCheckRoutes(jwtpath)
 
 	log.Fatal(server.Run(":8080"))
 }
