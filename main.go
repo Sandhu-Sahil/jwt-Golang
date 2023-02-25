@@ -23,6 +23,7 @@ var (
 	userc       *mongo.Collection
 	mongoclient *mongo.Client
 	err         error
+	// validate    *validator.Validate
 )
 
 func init() {
@@ -45,6 +46,8 @@ func init() {
 	uc = controllers.New(us)
 	rs = routes.NewRouterService(uc)
 	server = gin.Default()
+
+	// validate = validator.New()
 }
 
 func main() {
